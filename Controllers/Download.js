@@ -1,8 +1,5 @@
 const { spawn } = require('child_process');
-const path = require('path');
 const logger = require('../Utils/Logger.js');
-
-
 
 exports.downloadVideo = async (req, res) => {
   const { url, quality } = req.query;
@@ -41,6 +38,7 @@ exports.downloadVideo = async (req, res) => {
 
     logger.info(`Using format: ${format}`);
 
+    // Spawn yt-dlp process
     const ytDlp = spawn('yt-dlp', ytdlpArgs);
 
     const ffmpegArgs = [
@@ -52,8 +50,8 @@ exports.downloadVideo = async (req, res) => {
       'pipe:1'
     ];
 
-    // ✅ USE LOCAL FFmpeg instead of system one
-    const ffmpeg = spawn(ffmpegPath, ffmpegArgs);
+    // Spawn ffmpeg process (NOW FIXED)
+    const ffmpeg = spawn('ffmpeg', ffmpegArgs);
 
     ytDlp.stdout.pipe(ffmpeg.stdin);
     ffmpeg.stdout.pipe(res);
