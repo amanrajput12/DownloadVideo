@@ -1,11 +1,14 @@
-# Use official Node image
 FROM node:18
 
-# Install ffmpeg and python3
-RUN apt-get update && apt-get install -y ffmpeg python3 python3-pip curl
+# Install ffmpeg, python3, pip, curl, venv
+RUN apt-get update && apt-get install -y ffmpeg python3 python3-pip python3-venv curl
 
-# Install yt-dlp via pip
-RUN pip3 install yt-dlp
+# Create virtual environment for yt-dlp
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install yt-dlp inside venv
+RUN pip install yt-dlp
 
 # Set working directory
 WORKDIR /app
@@ -17,8 +20,6 @@ RUN npm install
 # Copy rest of the project
 COPY . .
 
-# Expose port
 EXPOSE 5000
 
-# Start the app
 CMD ["npm", "start"]
