@@ -1,0 +1,8 @@
+[INFO] 2026-01-19T20:17:44.537Z - Download started for: https://www.youtube.com/shorts/3vUBpz9oWnw&quality=720 and quality: undefined
+[INFO] 2026-01-19T20:17:44.550Z - Using format: bestvideo[height<=1440]+bestaudio/best
+[INFO] 2026-01-19T20:17:55.602Z - User closed connection
+[INFO] 2026-01-19T20:17:55.607Z - Download completed successfully
+[INFO] 2026-01-19T20:26:07.822Z - Download started for: https://www.youtube.com/watch?v=knGCfzm4jWs&quality=1080 and quality: undefined
+[INFO] 2026-01-19T20:26:08.937Z - Using format: bestvideo[height<=1440]+bestaudio/best
+[INFO] 2026-01-19T20:27:36.105Z - User closed connection
+[INFO] 2026-01-19T20:27:36.106Z - Download completed successfully
