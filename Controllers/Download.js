@@ -1,15 +1,18 @@
 const { spawn } = require('child_process');
+const path = require('path');
 const logger = require('../Utils/Logger.js');
 
+const ffmpegPath = path.join(__dirname, '../bin/ffmpeg');
+
 exports.downloadVideo = async (req, res) => {
-  const { url,quality  } = req.query;
+  const { url, quality } = req.query;
 
   try {
     logger.info(`Download started for: ${url} and quality: ${quality}`);
 
     res.header('Content-Disposition', 'attachment; filename="video.mp4"');
     res.header('Content-Type', 'video/mp4');
-   
+
     let format;
 
     switch (quality) {
@@ -31,7 +34,7 @@ exports.downloadVideo = async (req, res) => {
         break;
 
       default:
-        format = 'bestvideo[height<=1440]+bestaudio/best';
+        format = 'bestvideo[height<=1080]+bestaudio/best';
     }
 
     const ytdlpArgs = ['-f', format, '-o', '-', '--no-playlist', url];
@@ -49,7 +52,8 @@ exports.downloadVideo = async (req, res) => {
       'pipe:1'
     ];
 
-    const ffmpeg = spawn('ffmpeg', ffmpegArgs);
+    // ✅ USE LOCAL FFmpeg instead of system one
+    const ffmpeg = spawn(ffmpegPath, ffmpegArgs);
 
     ytDlp.stdout.pipe(ffmpeg.stdin);
     ffmpeg.stdout.pipe(res);
@@ -65,14 +69,6 @@ exports.downloadVideo = async (req, res) => {
       clearTimeout(killTimer);
       ytDlp.kill();
       ffmpeg.kill();
-    });
-
-    ytDlp.stderr.on('data', (data) => {
-    //   logger.info(`yt-dlp: ${data.toString()}`);
-    });
-
-    ffmpeg.stderr.on('data', (data) => {
-    //   logger.info(`ffmpeg: ${data.toString()}`);
     });
 
     ytDlp.on('error', (err) => {
