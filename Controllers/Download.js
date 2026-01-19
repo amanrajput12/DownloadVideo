@@ -2,7 +2,7 @@ const { spawn } = require('child_process');
 const path = require('path');
 const logger = require('../Utils/Logger.js');
 
-const ffmpegPath = path.join(__dirname, '../bin/ffmpeg');
+
 
 exports.downloadVideo = async (req, res) => {
   const { url, quality } = req.query;
