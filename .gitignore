@@ -1,0 +1,4 @@
+bin/
+git add .
+git commit -m "remove large ffmpeg binaries"
+git push
